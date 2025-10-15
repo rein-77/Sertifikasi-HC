@@ -12,7 +12,7 @@ test('users can authenticate using the login screen', function () {
     $user = User::factory()->create();
 
     $response = $this->post('/login', [
-        'email' => $user->email,
+        'nopeg' => $user->pegawai_nopeg,
         'password' => 'password',
     ]);
 
@@ -24,7 +24,7 @@ test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
     $this->post('/login', [
-        'email' => $user->email,
+        'nopeg' => $user->pegawai_nopeg,
         'password' => 'wrong-password',
     ]);
 
@@ -37,5 +37,5 @@ test('users can logout', function () {
     $response = $this->actingAs($user)->post('/logout');
 
     $this->assertGuest();
-    $response->assertRedirect('/');
+    $response->assertRedirect(route('login'));
 });
