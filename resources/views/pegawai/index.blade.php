@@ -107,7 +107,7 @@
 							</div>
 
 							<div class="pt-4">
-								{{ $pegawais->onEachSide(1)->links('vendor.pagination.pegawai') }}
+								{{ $pegawais->onEachSide(1)->links('vendor.pagination.table') }}
 							</div>
 						@else
 							<div class="flex flex-col items-center justify-center gap-2 py-12 text-center">

@@ -25,11 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/pegawais/bulk/confirm', [PegawaiController::class, 'confirmBulk'])->name('pegawais.bulk.confirm');
     Route::resource('pegawais', PegawaiController::class)->except(['show']);
 
-    Route::get('/sertifikats', [SertifikatController::class, 'index'])->name('sertifikats.index');
-    Route::post('/sertifikats', [SertifikatController::class, 'store'])->name('sertifikats.store');
-    Route::get('/sertifikats/{sertifikat}', [SertifikatController::class, 'show'])->name('sertifikats.show');
-    Route::match(['put', 'patch'], '/sertifikats/{sertifikat}', [SertifikatController::class, 'update'])->name('sertifikats.update');
-    Route::delete('/sertifikats/{sertifikat}', [SertifikatController::class, 'destroy'])->name('sertifikats.destroy');
+    Route::resource('sertifikats', SertifikatController::class)->except(['show']);
 });
 
 require __DIR__.'/auth.php';

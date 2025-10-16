@@ -15,9 +15,34 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('pegawais.index')" :active="request()->routeIs('pegawais.*')">
-                        {{ __('Pegawai') }}
-                    </x-nav-link>
+
+                    @php
+                        $isDataMasterActive = request()->routeIs('pegawais.*') || request()->routeIs('sertifikats.*');
+                    @endphp
+
+                    <div class="flex items-center">
+                        <x-dropdown align="left" width="48">
+                            <x-slot name="trigger">
+                                <button class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out {{ $isDataMasterActive ? 'border-indigo-400 text-gray-900 focus:border-indigo-700' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300' }}">
+                                    <span>{{ __('Data Master') }}</span>
+                                    <div class="ms-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <x-dropdown-link :href="route('pegawais.index')" :class="request()->routeIs('pegawais.*') ? 'bg-gray-100 text-gray-900' : ''">
+                                    {{ __('Pegawai') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('sertifikats.index')" :class="request()->routeIs('sertifikats.*') ? 'bg-gray-100 text-gray-900' : ''">
+                                    {{ __('Sertifikat') }}
+                                </x-dropdown-link>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
                 </div>
             </div>
 
@@ -73,9 +98,22 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('pegawais.index')" :active="request()->routeIs('pegawais.*')">
-                {{ __('Pegawai') }}
-            </x-responsive-nav-link>
+            <div x-data="{ openMaster: request()->routeIs('pegawais.*') || request()->routeIs('sertifikats.*') }" class="space-y-1">
+                <button @click="openMaster = !openMaster" :aria-expanded="openMaster" class="flex w-full items-center justify-between ps-3 pe-4 py-2 border-l-4 text-start text-base font-medium transition duration-150 ease-in-out focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300" :class="openMaster ? 'border-indigo-400 text-indigo-700 bg-indigo-50' : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300'">
+                    <span>{{ __('Data Master') }}</span>
+                    <svg :class="openMaster ? 'rotate-180 text-indigo-500' : 'text-gray-400'" class="h-4 w-4 transition-transform duration-150" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 011.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.25 8.27a.75.75 0 01-.02-1.06z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <div x-show="openMaster" x-cloak class="space-y-1">
+                    <x-responsive-nav-link :href="route('pegawais.index')" :active="request()->routeIs('pegawais.*')">
+                        {{ __('Pegawai') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('sertifikats.index')" :active="request()->routeIs('sertifikats.*')">
+                        {{ __('Sertifikat') }}
+                    </x-responsive-nav-link>
+                </div>
+            </div>
         </div>
 
         <!-- Responsive Settings Options -->

@@ -2,59 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SertifikatRequest;
 use App\Models\Sertifikat;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class SertifikatController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request)
     {
-        $sertifikats = Sertifikat::query()->latest()->paginate(15);
+        $search = trim((string) $request->query('search', ''));
 
-        return response()->json($sertifikats);
-    }
+        $sertifikats = Sertifikat::query()
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($inner) use ($search) {
+                    $inner->where('kode_sertifikat', 'like', "%{$search}%")
+                        ->orWhere('bidang', 'like', "%{$search}%")
+                        ->orWhere('jenjang', 'like', "%{$search}%")
+                        ->orWhere('nama_penerbit', 'like', "%{$search}%");
+                });
+            })
+            ->orderBy('kode_sertifikat')
+            ->paginate(10)
+            ->withQueryString();
 
-    public function store(Request $request): JsonResponse
-    {
-        $validated = $request->validate([
-            'kode_sertifikat' => 'required|string|max:50|unique:sertifikats,kode_sertifikat',
-            'bidang' => 'nullable|string|max:100',
-            'jenjang' => 'nullable|string|max:50',
-            'nama_penerbit' => 'nullable|string|max:150',
-            'keterangan' => 'nullable|string',
+        return view('sertifikat.index', [
+            'sertifikats' => $sertifikats,
+            'search' => $search,
         ]);
-
-        $sertifikat = Sertifikat::create($validated);
-
-        return response()->json($sertifikat, Response::HTTP_CREATED);
     }
 
-    public function show(Sertifikat $sertifikat): JsonResponse
+    public function create()
     {
-        return response()->json($sertifikat);
+        return view('sertifikat.create');
     }
 
-    public function update(Request $request, Sertifikat $sertifikat): JsonResponse
+    public function store(SertifikatRequest $request)
     {
-        $validated = $request->validate([
-            'kode_sertifikat' => 'sometimes|required|string|max:50|unique:sertifikats,kode_sertifikat,' . $sertifikat->id,
-            'bidang' => 'nullable|string|max:100',
-            'jenjang' => 'nullable|string|max:50',
-            'nama_penerbit' => 'nullable|string|max:150',
-            'keterangan' => 'nullable|string',
-        ]);
+        Sertifikat::create($request->validated());
 
-        $sertifikat->update($validated);
-
-        return response()->json($sertifikat);
+        return redirect()
+            ->route('sertifikats.index')
+            ->with('status', __('Sertifikat berhasil ditambahkan.'));
     }
 
-    public function destroy(Sertifikat $sertifikat): Response
+    public function edit(Sertifikat $sertifikat)
+    {
+        return view('sertifikat.edit', compact('sertifikat'));
+    }
+
+    public function update(SertifikatRequest $request, Sertifikat $sertifikat)
+    {
+        $sertifikat->update($request->validated());
+
+        return redirect()
+            ->route('sertifikats.index')
+            ->with('status', __('Data sertifikat berhasil diperbarui.'));
+    }
+
+    public function destroy(Sertifikat $sertifikat)
     {
         $sertifikat->delete();
 
-        return response()->noContent();
+        return redirect()
+            ->route('sertifikats.index')
+            ->with('status', __('Sertifikat berhasil dihapus.'));
     }
 }
