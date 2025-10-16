@@ -28,5 +28,8 @@ class DatabaseSeeder extends Seeder
             'pegawai_nopeg' => $pegawai->nopeg,
             'password' => Hash::make('password'),
         ]);
+        $this->call(SertifikatsTableSeeder::class);
+        $this->call(PegawaisTableSeeder::class);
+        $this->call(SertifikatPegawaiTableSeeder::class);
     }
 }
