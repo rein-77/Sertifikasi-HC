@@ -23,26 +23,35 @@
                     <div class="flex items-center">
                         <x-dropdown align="left" width="48">
                             <x-slot name="trigger">
-                                <button class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out {{ $isDataMasterActive ? 'border-indigo-400 text-gray-900 focus:border-indigo-700' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300' }}">
+                                <button
+                                    class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out {{ $isDataMasterActive ? 'border-indigo-400 text-gray-900 focus:border-indigo-700' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300' }}">
                                     <span>{{ __('Data Master') }}</span>
                                     <div class="ms-1">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
                                         </svg>
                                     </div>
                                 </button>
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('pegawais.index')" :class="request()->routeIs('pegawais.*') ? 'bg-gray-100 text-gray-900' : ''">
+                                <x-dropdown-link :href="route('pegawais.index')"
+                                    :class="request()->routeIs('pegawais.*') ? 'bg-gray-100 text-gray-900' : ''">
                                     {{ __('Pegawai') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('sertifikats.index')" :class="request()->routeIs('sertifikats.*') ? 'bg-gray-100 text-gray-900' : ''">
+                                <x-dropdown-link :href="route('sertifikats.index')"
+                                    :class="request()->routeIs('sertifikats.*') ? 'bg-gray-100 text-gray-900' : ''">
                                     {{ __('Sertifikat') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
                     </div>
+                    <x-nav-link :href="route('sertifikat-pegawai.index')" :active="request()->routeIs('sertifikat-pegawai.*')">
+                        {{ __('Sertifikat Pegawai') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -50,12 +59,16 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <button
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->pegawai->nama ?? Auth::user()->pegawai_nopeg }}</div>
 
                             <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
                                 </svg>
                             </div>
                         </button>
@@ -70,8 +83,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -82,10 +94,14 @@
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                <button @click="open = ! open"
+                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -99,28 +115,41 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             <div x-data="{ openMaster: request()->routeIs('pegawais.*') || request()->routeIs('sertifikats.*') }" class="space-y-1">
-                <button @click="openMaster = !openMaster" :aria-expanded="openMaster" class="flex w-full items-center justify-between ps-3 pe-4 py-2 border-l-4 text-start text-base font-medium transition duration-150 ease-in-out focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300" :class="openMaster ? 'border-indigo-400 text-indigo-700 bg-indigo-50' : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300'">
+                class="space-y-1">
+                <button @click="openMaster = !openMaster" :aria-expanded="openMaster"
+                    class="flex w-full items-center justify-between ps-3 pe-4 py-2 border-l-4 text-start text-base font-medium transition duration-150 ease-in-out focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300"
+                    :class="openMaster ? 'border-indigo-400 text-indigo-700 bg-indigo-50' : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300'">
                     <span>{{ __('Data Master') }}</span>
-                    <svg :class="openMaster ? 'rotate-180 text-indigo-500' : 'text-gray-400'" class="h-4 w-4 transition-transform duration-150" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 011.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.25 8.27a.75.75 0 01-.02-1.06z" clip-rule="evenodd" />
+                    <svg :class="openMaster ? 'rotate-180 text-indigo-500' : 'text-gray-400'"
+                        class="h-4 w-4 transition-transform duration-150" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 011.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.25 8.27a.75.75 0 01-.02-1.06z"
+                            clip-rule="evenodd" />
                     </svg>
                 </button>
                 <div x-show="openMaster" x-cloak class="space-y-1">
                     <x-responsive-nav-link :href="route('pegawais.index')" :active="request()->routeIs('pegawais.*')">
                         {{ __('Pegawai') }}
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('sertifikats.index')" :active="request()->routeIs('sertifikats.*')">
+                    <x-responsive-nav-link :href="route('sertifikats.index')"
+                        :active="request()->routeIs('sertifikats.*')">
                         {{ __('Sertifikat') }}
                     </x-responsive-nav-link>
                 </div>
             </div>
+            <x-responsive-nav-link :href="route('sertifikat-pegawai.index')" :active="request()->routeIs('sertifikat-pegawai.*')">
+                {{ __('Sertifikat Pegawai') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->pegawai->nama ?? __('Pengguna') }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ __('Nopeg: :nopeg', ['nopeg' => Auth::user()->pegawai_nopeg]) }}</div>
+                <div class="font-medium text-base text-gray-800">{{ Auth::user()->pegawai->nama ?? __('Pengguna') }}
+                </div>
+                <div class="font-medium text-sm text-gray-500">
+                    {{ __('Nopeg: :nopeg', ['nopeg' => Auth::user()->pegawai_nopeg]) }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
@@ -132,8 +161,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>

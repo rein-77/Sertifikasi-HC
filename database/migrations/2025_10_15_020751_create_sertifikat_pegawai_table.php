@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('pegawai_nopeg', 5);
             $table->string('sertifikat_kode', 50);
             $table->string('no_reg_sertifikat', 100)->nullable();
-            $table->string('nomor_sertifikat', 100);
+            $table->string('nomor_sertifikat', 100) ->nullable();
             $table->date('tanggal_terbit');
             $table->date('tanggal_expire')->nullable();
             $table->string('penyelenggara', 150)->nullable();
